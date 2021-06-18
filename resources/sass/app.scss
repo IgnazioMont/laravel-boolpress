@@ -6,3 +6,16 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+main.py-4 {
+    h1, h4 {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+}
+.col-4 .card {
+    margin: auto;
+    margin-bottom: 20px;
+    width: 350px;
+}

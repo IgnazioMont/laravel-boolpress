@@ -25,9 +25,19 @@ Route::prefix('admin')
     tutte quelle create saranno protette da autenticazione.
     Si possono anche aggiungere le route alle CRUD ( Route::resource(); ) */
     Route::get('/', 'HomeController@index')->name('home');
+
+    Route::resource('posts', 'PostController');
 });
 
 /* La route dell'homepage pubblica chiamerà il controller che si trova nel solito file HomeController */
 Route::get('/', 'HomeController@index')->name('home'); 
 // Creata in automatico, la risettiamo a piacimento
 // Volendo aggiungiamo il middleware preso dall'HomeController
+
+
+/* Gestione blog pubblico */
+Route::get('/blog', 'PostController@index')->name('blog');
+
+/* Route per lo SLUG */
+Route::get('/blog/{slug}', 'PostController@show')->name('blog-page');
+/* verrà passato a show quando viene chiamato il controller */
