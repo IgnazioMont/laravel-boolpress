@@ -14,10 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes(); // route generate da laravel per l'autenticazione
 
-Route::get('/', function () {
-    return view('welcome');
+
+/* inseriamo la route per la sezione pubblica/utenti loggati */
+Route::prefix('admin')
+->namespace('Admin')
+->name('admin.')
+->middleware('auth')
+->group(function () {
+    /* questa route invece verrà chiamata dalla cartella admin,
+    tutte quelle create saranno protette da autenticazione.
+    Si possono anche aggiungere le route alle CRUD ( Route::resource(); ) */
+    Route::get('/', 'HomeController@index')->name('home');
 });
 
-Route::get('/home', 'HomeController@index')->middleware('auth')->name('home'); 
+/* La route dell'homepage pubblica chiamerà il controller che si trova nel solito file HomeController */
+Route::get('/', 'HomeController@index')->name('home'); 
 // Creata in automatico, la risettiamo a piacimento
-// Aggiungiamo il middleware preso dall'HomeController
+// Volendo aggiungiamo il middleware preso dall'HomeController

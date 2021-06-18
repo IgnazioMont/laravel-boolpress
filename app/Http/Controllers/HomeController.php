@@ -23,6 +23,6 @@ class HomeController extends Controller
     public function index()
     {
         /* Qui inseriamo eventuali funzioni per l'id utente o controllare se è loggato ecc.. */
-        return view('home');
+        return view('guest.home');
     }
 }
