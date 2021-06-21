@@ -57,6 +57,11 @@
                                 <a class="nav-link" href="{{ route('admin.posts.index') }}">Manage posts</a>
                             </li>
 
+                            {{-- Aggiungiamo che se è autenticato puà creare un nuovo post --}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.posts.create') }}">Create a new post</a>
+                            </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
