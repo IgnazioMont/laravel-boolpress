@@ -37,7 +37,11 @@ Route::get('/', 'HomeController@index')->name('home');
 
 /* Gestione blog pubblico */
 Route::get('/blog', 'PostController@index')->name('blog');
-
 /* Route per lo SLUG */
 Route::get('/blog/{slug}', 'PostController@show')->name('blog-page');
 /* verrà passato a show quando viene chiamato il controller */
+
+/* Inseriamo la route anche per la pagina delle categorie */
+Route::get('/categories', 'CategoryController@index')->name('categories');
+/* Mostriamo tutti i post della stessa categoria */
+Route::get('/categories/{slug}', 'CategoryController@show')->name('category-page');

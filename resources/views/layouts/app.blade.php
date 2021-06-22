@@ -37,6 +37,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('blog') }}">Blog</a>
                         </li>
+
+                        {{-- Aggiungiamo la route delle categorie --}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('categories') }}">Category's receipes</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
