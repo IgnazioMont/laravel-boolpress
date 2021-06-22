@@ -130,7 +130,7 @@ class PostController extends Controller
         $modif_post_data = $request->all();    
         
         /* ci serve la riga da modificare nel DB */
-        $post = Post::findOrFail('id');
+        $post = Post::findOrFail($id);
 
         /* Di default rimane immutato, uguale a quello che c'è già nel post */
         $modif_post_data['slug'] = $post->slug;   
