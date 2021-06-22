@@ -14,7 +14,7 @@ class UpdateAddCategoriesToPostTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            /* Creiamo una foreign key in una tabella esistente, NON può avere NULL, la posizioniamo dopo SLUG */
+            /* Creiamo una foreign key in una tabella esistente, NON può avere NULL quindi gli diciamo che i post possono anche non avere una categoria, la posizioniamo dopo SLUG */
             $table->unsignedBigInteger('category_id')->nullable()->after('slug');
             
             /* E' una foreign key che fa riferimento all'id della categoria' */

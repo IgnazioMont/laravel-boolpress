@@ -31,6 +31,20 @@
                 <textarea name="content" class="form-control" id="content" cols="30" rows="10" value="{{ old('content') }}"></textarea>
             </div>
 
+            {{-- inseriamo l'id della categoria da collegare, lo popola col numero dell'id --}}
+            <div class="form-group">
+                <label for="category_id">Category</label>
+                <select class="form-control" name="category_id" id="category_id">
+                    <option value="">Empty</option>
+
+                    @foreach($categories as $category)
+                        {{-- Gli mettiamo anche l'old per lasciare l'option selezionata, altrimenti è vuota --}}
+                        {{-- Man mano che si scorre la categoria, se è old diventa selected --}}
+                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}> {{ $category->name }} </option>
+                    @endforeach
+                </select>
+            </div>
+
             <input type="submit" class="btn btn-success" value="Save">
         </form>
     </div>
