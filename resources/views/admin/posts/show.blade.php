@@ -13,8 +13,14 @@
             <div><b>Category: </b> <i>{{ $post_category->name }}</i></div>
         @endif
 
-        <br>
-        
+        <div>
+            <strong class="mt-2 mb-2">Tags: </strong>
+            @foreach ($post_tags as $tag)
+                {{-- per ogni tag stampiamo seguito da virgola, la togliamo all'ultima iterazione --}}
+                {{ $tag->name }}{{ $loop->last ? '' : ', '}}
+            @endforeach
+        </div>
+
         <p>{{ $post->content }}</p>
 
         <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}" class="btn btn-warning">Edit post</a>

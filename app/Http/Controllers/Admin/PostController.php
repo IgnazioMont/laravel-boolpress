@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
+use App\Tag;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -17,6 +18,22 @@ class PostController extends Controller
      */
     public function index()
     {
+        /* "detach" elimina una relazione
+            se ci sono duplicati si eliminano entrambi
+        
+        es. $post = Post::find(*numeroPostID);
+            $post->tags()->detach(*numeroTagID);
+        se sono + di uno da elimiare si puà usare l'array: ->detach([*n1, *n2, *n3]);
+
+            con "attach" invece la si aggiunge
+        es. $post->tags()->attach(*numeroTagID);
+            
+        con SYNC sovrascrive totalmente i tag (elimina e aggiunge quelli che scriviamo)
+        es. $post->tags()->sync(*numeroTagID);
+        con sync([]) array vuoto vuol dire che non gli diamo nessun valore
+
+        QUESTE EVENTUALI MODIFICHE VENGONO EFFETTUATE IMMEDIATAMENTE
+        */
         $posts = Post::all();
 
         $data = [
@@ -33,11 +50,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        /* Prendiamo tutte le categorie */
+        /* Prendiamo tutte le categorie + i tag*/
         $categories = Category::all();
+        $tags = Tag::all();
 
         $data = [
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ];
 
         /* invia i dati a STORE */
@@ -61,7 +80,8 @@ class PostController extends Controller
                 possa inserire un id delle categorie che non esiste. 
                 (in tal caso avrebbe accesso a diversi dati dell'intero database)
                 gli mettiamo anche nullable in caso in cui lasciamo vuota la categoria */
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
         ]);
 
         $new_post_data = $request->all();
@@ -88,6 +108,12 @@ class PostController extends Controller
         $new_post->fill($new_post_data);
         $new_post->save();
 
+        /* Una volta che abbiamo popolato il nostro POST facciamo il SYNC per creare la relazione nella tabella ponte */
+        /* Se esiste ed è un array lo salviamo, altrimenti */
+        if(isset($new_post_data['tags']) && is_array($new_post_data['tags']) ) {
+            $new_post->tags()->sync($new_post_data['tags']);
+        }
+
         return redirect()->route('admin.posts.show', ['post' => $new_post->id]);
     }
 
@@ -103,7 +129,9 @@ class PostController extends Controller
 
         $data = [
             'post' => $post,
-            'post_category' => $post->category
+            'post_category' => $post->category,
+            /* leggiamo anche i tag */
+            'post_tags' => $post->tags
         ];
 
         return view('admin.posts.show', $data);

@@ -17,4 +17,9 @@ class Post extends Model
     public function category() { /* singolare, è una "one to many" */
         return $this->belongsTo('App\Category');
     }
+
+    /* Diciamo quindi che quando lavoriamo sui post, quando leggiamo i tag abbiamo una relaz. con il model App\Tag */
+    public function tags() {
+        return $this->belongsToMany('App\Tag');
+    }
 }

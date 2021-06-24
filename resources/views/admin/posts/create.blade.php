@@ -45,6 +45,23 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <h5>Tags</h5>
+
+                {{-- Costruiamo una checkbox per ogni tag e rendiamo univoche input(id) e label(for)
+                    (evitiamo che al click delle altre box venga selezionata sempre la prima)
+                    Le checkbox hanno tutte lo stesso NAME ma prenderebbe solo l'ultimo tag selezionato,
+                    per evitarlo le inseriamo in un array --}}
+                @foreach($tags as $tag)
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]" id="tag-{{ $tag->id }}">
+                        <label class="form-check-label" for="tag-{{ $tag->id }}">
+                            {{ $tag->name }}
+                        </label>
+                    </div>
+                @endforeach
+            </div>
+
             <input type="submit" class="btn btn-success" value="Save">
         </form>
     </div>
