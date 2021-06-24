@@ -5,9 +5,9 @@
 
 @section('content')
     <div class="contaienr">
-        <h1>Last news</h1>
+        <h1>Latest recipes</h1>
 
-        <h4>Reccomended for you</h4>
+        <h4>&#10024 Reccomended for you &#10024</h4>
 
         <div class="row">
             @foreach($posts as $post)

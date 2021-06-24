@@ -10954,3 +10954,12 @@ main.py-4 h4 {
   width: 350px;
 }
 
+h6 {
+  text-align: center;
+}
+
+.recipes {
+  margin: auto;
+  text-align: center;
+}
+
