@@ -147,11 +147,13 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $categories = Category::all();
+        $tags = Tag::all();
 
         /* prepopoliamo il form con i contenuti già presenti */
         $data = [
             'post' => $post,
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ];
 
         return view('admin.posts.edit', $data);
@@ -171,7 +173,8 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required|max:60000',
             /* Aggiungiamo anche qui la validazione della categoria */
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
         ]);
 
         $modif_post_data = $request->all();    
@@ -207,6 +210,15 @@ class PostController extends Controller
         /* Se non lo trova, err 404 */
         $post->update($modif_post_data);
 
+        /* In SYNC ora ci salviamo l'array dei TAG */
+        /* Se l'array ha la chiave tags ed è un array, salviamo i tag */
+        if(isset($modif_post_data['tags']) && is_array($modif_post_data['tags']) ) {
+            $post->tags()->sync($modif_post_data['tags']);
+            /* altrimenti svuotiamo tutte le relazioni */
+        } else {
+            $post->tags()->sync([]);
+        }
+
         return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
 
@@ -219,6 +231,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
+        /* Prima di eliminare il post cancelliamo prima tutti i tag per non creare "righe orfane", svuotiamo le relazioni */
+        $post->tags()->sync([]);
         $post->delete();
 
         return redirect()->route('admin.posts.index');

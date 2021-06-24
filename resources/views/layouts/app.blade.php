@@ -35,12 +35,12 @@
                     <ul class="navbar-nav mr-auto">
                         {{-- Aggiungiamo la route "blog" visibile a tutte le pagine sia private che public --}}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('blog') }}">Blog</a>
+                            <a class="nav-link" href="{{ route('blog') }}">Recipes list</a>
                         </li>
 
                         {{-- Aggiungiamo la route delle categorie --}}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('categories') }}">Category's receipes</a>
+                            <a class="nav-link" href="{{ route('categories') }}">Category's recipes</a>
                         </li>
                     </ul>
 
@@ -59,12 +59,12 @@
                         @else
                             {{-- Aggiungiamo che se è autenticato puà gestire i post --}}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.posts.index') }}">Manage posts</a>
+                                <a class="nav-link" href="{{ route('admin.posts.index') }}">Manage recipes</a>
                             </li>
 
                             {{-- Aggiungiamo che se è autenticato puà creare un nuovo post --}}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.posts.create') }}">Create a new post</a>
+                                <a class="nav-link" href="{{ route('admin.posts.create') }}">Create a new recipe</a>
                             </li>
 
                             <li class="nav-item dropdown">

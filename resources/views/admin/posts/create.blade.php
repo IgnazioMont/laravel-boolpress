@@ -54,7 +54,15 @@
                     per evitarlo le inseriamo in un array --}}
                 @foreach($tags as $tag)
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]" id="tag-{{ $tag->id }}">
+                        
+                        <input  class="form-check-input" 
+                                type="checkbox"
+                                value="{{ $tag->id }}"
+                                name="tags[]"
+                                id="tag-{{ $tag->id }}"
+                                {{-- Gli diciamo anche che se l'id corrente si trova all'interno di old tags, è checked altrimenti niente --}}
+                                {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                                {{-- Dato che old torna NULL se non viene selezionato nulla diciamo ad old di tornare un array vuoto di default --}}
                         <label class="form-check-label" for="tag-{{ $tag->id }}">
                             {{ $tag->name }}
                         </label>
