@@ -20,6 +20,8 @@ class Post extends Model
 
     /* Diciamo quindi che quando lavoriamo sui post, quando leggiamo i tag abbiamo una relaz. con il model App\Tag */
     public function tags() {
-        return $this->belongsToMany('App\Tag');
+        return $this->belongsToMany('App\Tag', 'post_tag');
+        /* Come secondo parametro scriviamo in modo esplicito la tabella ponte 
+        a cui fa riferimento per evitare problemi, tipo quando non sono in ordine alfabetico */
     }
 }

@@ -13,6 +13,6 @@ class Tag extends Model
 
     /* Allo stesso modo se lavoriamo con la classe Tag, quando vogliamo sapere i post legati, chiederà a User */
     public function posts() {
-        return $this->belongsToMany('App\Post');
+        return $this->belongsToMany('App\Post', 'post_tag');
     }
 }

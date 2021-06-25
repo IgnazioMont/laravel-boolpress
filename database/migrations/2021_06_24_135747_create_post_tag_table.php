@@ -39,7 +39,8 @@ class CreatePostTagTable extends Migration
     public function down()
     {
         /* Le mettiamo anche qui per il rollback */
-        /* Prima di cancellare le colonne dobbiamo modificare la tabella con Schema */
+        /* Prima di cancellare le colonne dobbiamo modificare la tabella con Schema,
+        cancelliamo le relazioni quindi, lo facciamo in caso ci da problemi */
         Schema::table('post_tag', function (Blueprint $table) {
             $table->dropForeign('post_tag_post_id_foreign');
             $table->dropForeign('post_tag_tag_id_foreign');
