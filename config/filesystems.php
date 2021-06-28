@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    /* Settiamo di default, public anzichè private */
+    'default' => env('FILESYSTEM_DRIVER', 'public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -50,7 +51,8 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => storage_path('app/public'), 
+            /* vuol dire che i file risiedono in storage/app/public */
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
