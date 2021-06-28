@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use App\Post;
 use App\Category;
 use App\Tag;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use App\Mail\NewPostAdminNotification;
 
 class PostController extends Controller
 {
@@ -82,7 +84,8 @@ class PostController extends Controller
                 (in tal caso avrebbe accesso a diversi dati dell'intero database)
                 gli mettiamo anche nullable in caso in cui lasciamo vuota la categoria */
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|exists:tags,id'
+            'tags' => 'nullable|exists:tags,id',
+            'cover-img' => 'nullable|image'
         ]);
 
         $new_post_data = $request->all();
@@ -126,6 +129,9 @@ class PostController extends Controller
         if(isset($new_post_data['tags']) && is_array($new_post_data['tags']) ) {
             $new_post->tags()->sync($new_post_data['tags']);
         }
+
+        /* Inviamo la mail all'admin, creo una nuova istanza dell'email da inviare */
+        Mail::to('ignazio@test.it')->send(new NewPostAdminNotification($new_post));
 
         return redirect()->route('admin.posts.show', ['post' => $new_post->id]);
     }
@@ -187,7 +193,8 @@ class PostController extends Controller
             'content' => 'required|max:60000',
             /* Aggiungiamo anche qui la validazione della categoria */
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|exists:tags,id'
+            'tags' => 'nullable|exists:tags,id',
+            'cover-img' => 'nullable|image'
         ]);
 
         $modif_post_data = $request->all();    
@@ -219,6 +226,15 @@ class PostController extends Controller
             $modif_post_data['slug'] = $new_slug;
         }
 
+        /* Se ha la cover image settata allora faccio l'upload */
+        if(isset($modif_post_data['cover-img'])) {
+            $image_path = Storage::put('posts-cover', $modif_post_data['cover-img']);
+
+            if($image_path) {
+                $modif_post_data['cover'] = $image_path;
+                /* Se l'upload non è avvenuto con successo, image_path è FALSE */
+            }
+        }
         
         /* Se non lo trova, err 404 */
         $post->update($modif_post_data);

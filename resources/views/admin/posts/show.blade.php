@@ -5,6 +5,13 @@
     <div class="container">
         <h1>{{ $post->title }}</h1>
 
+        {{-- Se esiste la mostriamo --}}
+        @if($post->cover)
+            <div class="mt-2 mb-2">
+                <img src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
+            </div>
+        @endif
+
         {{-- Per debug nel pannello di amministrazione possiamo anche stamparci lo SLUG --}}
         <div><b>SLUG: </b> <i>{{ $post->slug }}</i></div>
 
