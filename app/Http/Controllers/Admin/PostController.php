@@ -8,6 +8,7 @@ use App\Post;
 use App\Category;
 use App\Tag;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -103,6 +104,18 @@ class PostController extends Controller
 
         /* Popoliamo il data da salvare quando troviamo il nuovo slug */
         $new_post_data['slug'] = $new_slug;
+
+        /* Se c'è l'immagine caricata, salviamo in storage, aggiungiamo il path relativo 
+        a cover in new_post_data */
+        if(isset($new_post_data['cover-img'])) {
+            /* Vuole 2 argomenti, sottocartella + file */
+            $new_img_path = Storage::put('posts-cover', $new_post_data['cover-img']);
+        
+            /* Se l'upload è avvenuto con successo (stringa dell'immagine) includiamo in cover e lo salviamo nel database */
+            if($new_img_path) {
+                $new_post_data['cover'] = $new_img_path;
+            }
+        }
 
         $new_post = new Post();
         $new_post->fill($new_post_data);

@@ -17,7 +17,7 @@
         @endif
 
         {{-- Creiamo il form --}}
-        <form action="{{ route('admin.posts.store') }}" method="post">
+        <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('POST')
 
@@ -68,6 +68,12 @@
                         </label>
                     </div>
                 @endforeach
+            </div>
+
+            {{-- Inseriamo l'input per le immagini --}}
+            <div class="form-group">
+                <label for="cover-img">Cover image</label>
+                <input type="file" class="form-control-file" name="cover-img" id="cover-img">
             </div>
 
             <input type="submit" class="btn btn-success" value="Save">

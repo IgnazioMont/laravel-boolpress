@@ -10,7 +10,8 @@ class Post extends Model
         'title',
         'content',
         'slug',
-        'category_id' /* bisogna inserire la categoria per far si che riesca a salvarla nella view */
+        'category_id', /* bisogna inserire la categoria per far si che riesca a salvarla nella view */
+        'cover'
     ];
 
     /* diciamo a chi fa riferimento l'id della colonna */
