@@ -18,5 +18,5 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 }); */
 
-/* Deve chiamare il controller come sempre */
+
 Route::get('/posts', 'Api\PostController@index')->name('api.posts');

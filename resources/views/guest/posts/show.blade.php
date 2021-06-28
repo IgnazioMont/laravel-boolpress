@@ -12,6 +12,9 @@
 
         <h1>{{ $post->title }}</h1>
 
+        {{-- Data della creazione post, CARBON già implementato da Laravel --}}
+        <div class="mt-2 mb-2">Post created at: {{ $post->created_at->format('d M Y') }}</div>
+
         <p>{{ $post->content }}</p>
     </div>
 @endsection

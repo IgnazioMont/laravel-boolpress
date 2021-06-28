@@ -9,6 +9,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    {{-- creiamo una section per estendere Vue solo nella pagina dove ci serve --}}
+    @yield('header-scripts')
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
@@ -94,5 +97,7 @@
             @yield('content')
         </main>
     </div>
+
+    @yield('footer-scripts')
 </body>
 </html>

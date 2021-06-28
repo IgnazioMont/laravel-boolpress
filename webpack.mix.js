@@ -13,3 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
+
+/* Quando compila gli diciamo di prendere il file post.js in resources
+e compilalo in public/js, creerà il file con lo stesso nome */
+mix.js('resources/js/posts.js', 'public/js')

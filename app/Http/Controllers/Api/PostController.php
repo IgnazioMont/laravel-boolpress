@@ -21,7 +21,8 @@ class PostController extends Controller
                 'title' => $post->title,
                 'content' => $post->content,
                 /* Se c'è lo stampa altrimenti riga vuota */
-                'category' => $post->category ? $post->category->name : ''
+                'category' => $post->category ? $post->category->name : '',
+                'tags' => $post->tags->toArray()
             ];
         }
 

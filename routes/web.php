@@ -45,3 +45,6 @@ Route::get('/blog/{slug}', 'PostController@show')->name('blog-page');
 Route::get('/categories', 'CategoryController@index')->name('categories');
 /* Mostriamo tutti i post della stessa categoria */
 Route::get('/categories/{slug}', 'CategoryController@show')->name('category-page');
+
+/* Post visualizzati con VueJS */
+Route::get('/vue-posts', 'PostController@vuePosts')->name('vue-post');
